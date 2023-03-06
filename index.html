@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Zhil.</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<style>
+		/* bubble chat bot */
+.chatbot-message {
+  background-color: #8bc34a; /* warna latar belakang */
+  color: #fff; /* warna teks */
+  border-radius: 10px; /* membulatkan sudut bubble */
+  max-width: 80%; /* lebar maksimum */
+  margin: 10px; /* jarak antar bubble */
+  padding: 10px; /* jarak antara isi bubble dengan tepi bubble */
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.3); /* bayangan bubble */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* jenis font teks */
+}
+
+/* bubble chat pengguna */
+.user-message {
+  background-color: #a1887f; /* warna latar belakang */
+  color: #fff; /* warna teks */
+  border-radius: 10px; /* membulatkan sudut bubble */
+  max-width: 80%; /* lebar maksimum */
+  margin: 10px; /* jarak antar bubble */
+  padding: 10px; /* jarak antara isi bubble dengan tepi bubble */
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.3); /* bayangan bubble */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* jenis font teks */
+}
+
+/* styling untuk tampilan hutan */
+body {
+  background-color: #8bc34a; /* warna latar belakang */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* jenis font teks */
+}
+
+.chatbot-container {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  background-color: #fff; /* warna latar belakang box chatbot */
+  border-radius: 10px; /* membulatkan sudut box chatbot */
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.3); /* bayangan box chatbot */
+}
+
+.chatbot-header {
+  background-color: #4caf50; /* warna latar belakang header */
+  color: #fff; /* warna teks header */
+  padding: 10px;
+  text-align: center;
+  border-top-left-radius: 10px; /* membulatkan sudut header kiri */
+  border-top-right-radius: 10px; /* membulatkan sudut header kanan */
+}
+
+.chatbot-footer {
+  background-color: #a1887f; /* warna latar belakang footer */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-bottom-left-radius: 10px; /* membulatkan sudut footer kiri */
+  border-bottom-right-radius: 10px; /* membulatkan sudut footer kanan */
+}
+
+.chatbot-footer input[type="text"] {
+  width: 80%;
+  padding: 8px;
+  border-radius: 20px;
+  border: none;
+  margin-right: 10px;
+}
+
+.chatbot-footer button {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  background-color: #4caf50; /* warna latar belakang tombol kirim */
+  color: #fff; /* warna teks tombol kirim */
+font-weight: bold;
+cursor: pointer;
+transition: background-color 0.3s ease-in-out;
+}
+
+.chatbot-footer button:hover {
+  background-color: #3e8e41; /* warna latar belakang saat tombol kirim dihover */
+}
+
+.chatbot-footer input[type="text"] {
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 20px;
+  background-color: #f2f2f2; /* warna latar belakang input */
+  font-size: 16px;
+}
+
+.chatbot-message {
+  max-width: 80%;
+  margin: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 16px;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+}
+
+.user-message {
+  margin-left: auto;
+  background-color: #7a5230; /* warna latar belakang bubble chat pengguna */
+  color: #fff;
+}
+
+.chatbot-message p {
+  margin: 0;
+}
+
+.chatbot-message img.profile-picture {
+  display: none;
+}
+
+.chatbot-message.bot-message {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  background-color: #dbc9a9; /* warna latar belakang bubble chat bot */
+  color: #000;
+}
+
+.chatbot-message.bot-message p {
+  margin: 0;
+  margin-left: 50px;
+}
+
+.chatbot-header {
+  background-color: #8B5A2B; /* warna latar belakang header */
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+  font-size: 32px;
+}
+
+.chatbot-container {
+  background-color: #f2e7d9; /* warna latar belakang keseluruhan */
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+@media only screen and (max-width: 600px) {
+  .chatbot-message {
+    max-width: 60%;
+  }
+
+  .chatbot-header {
+    font-size: 24px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #999;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+/* Tambahkan animasi scroll bar */
+::-webkit-scrollbar-thumb {
+  animation-name: scroll;
+  animation-duration: 1s;
+}
+
+/* Atur animasi scroll */
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Membuat animasi blink */
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Mengatur animasi pada pesan bot */
+.chatbot-body .chatbot-message.bot .chatbot-text::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 16px;
+  margin-left: 8px;
+  vertical-align: middle;
+  background-color: #ffffff; /* warna animasi */
+  animation: blink 1s infinite;
+}
+
+</style>
+</head>
+<body>
+	<div class="chatbot-container">
+		<div class="chatbot-header">
+			<h1>Zhil AI</h1>
+      <h5>Website ini dibuat oleh Zhil</h5>
+		</div>
+		<div class="chatbot-body">
+			<!-- tempat pesan ditampilkan -->
+		</div>
+		<div class="chatbot-footer">
+			<input type="text" placeholder="Ketik pesan di sini...">
+			<button>Kirim</button>
+		</div>
+	</div>
+  <!-- Script untuk mengaktifkan chatbot -->
+	<script>
+const chatbot = document.querySelector('.chatbot');
+const messageContainer = document.querySelector('.chatbot-body');
+const input = document.querySelector('.chatbot-footer input[type="text"]');
+const sendBtn = document.querySelector('.chatbot-footer button');
+const simiAPI = "https://api.akuari.my.id/simi/simi?query=";
+const botName = "Zhil AI"; // ganti dengan nama bot Anda
+const bannedWords = ["😂", "😄", "🤣"]; // daftar kata yang tidak diperbolehkan
+const errorMsg = [
+  "Jangan ngomong kasar yaaa",
+  "Sabarr"
+]; // daftar pesan kesalahan acak
+
+sendBtn.addEventListener('click', () => {
+  const message = input.value;
+  if (!message) return;
+
+  // membuat bubble chat pengguna
+  const userMessageContainer = document.createElement('div');
+  userMessageContainer.classList.add('chatbot-message');
+  userMessageContainer.classList.add('user-message');
+  userMessageContainer.textContent = message;
+  messageContainer.appendChild(userMessageContainer);
+
+  // menggeser bubble chat pengguna ke kanan
+  userMessageContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+  if (!bannedWords.includes(message)) {
+    fetch(simiAPI + message)
+      .then(response => response.json())
+      .then(data => {
+        let chatbotMessage = data.respon;
+        if (chatbotMessage === errorMsg[0]) {
+          chatbotMessage = errorMsg[Math.floor(Math.random() * errorMsg.length)];
+        }
+        chatbotMessage = chatbotMessage.replace(/Simi/gi, botName);
+
+        // membuat bubble chat bot
+        const botMessageContainer = document.createElement('div');
+        botMessageContainer.classList.add('chatbot-message');
+        botMessageContainer.innerHTML = `<img class="profile-picture" src="https://i.imgur.com/hU6EJyR.jpg" alt="Profile picture"><p><strong>${botName}:</strong> ${chatbotMessage}</p>`;
+        messageContainer.appendChild(botMessageContainer);
+
+        // menggeser bubble chat bot ke kiri
+        botMessageContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+        input.value = '';
+      })
+      .catch(error => console.error(error));
+  }
+});
+</script>
+</body>
+</html>
